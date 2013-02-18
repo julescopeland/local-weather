@@ -1,9 +1,45 @@
 = local-weather
 
-Description goes here.
+Local Weather pulls together a few other gems.
+
+When installed, it will:
+
+* query a geoip database to get a close approximate location of the end user (or at least the last proxy that they went through)
+* figure out their local time
+* figure out their current season
+* figure out their current light conditions (night/dawn/morning/midday/afternoon/evening/dusk)
+* query a weather API service to get:
+  * the local temperature
+  * the local weather condition as a code
+  * the local weather condition in words
+* It also normalises the weather condition output into 'snow', 'clear','partly cloudy','overcast','drizzle','rain','heavy rain','thunder'
+
+Include the module into a controller, and all of the above will available as instance variables in your views:
+
+ * @lw_local_time
+ * @lw_season
+ * @lw_light_condition
+ * @lw_temperature
+ * @lw_weather_code
+ * @lw_full_weather_condition
+ * @lw_weather_condition
+ * @location - which is an instance of Geocoder::Result, it provides the following data:
+    * result.latitude - float
+    * result.longitude - float
+    * result.coordinates - array of the above two
+    * result.address - string
+    * result.city - string
+    * result.state - string
+    * result.state_code - string
+    * result.postal_code - string
+    * result.country - string
+    * result.country_code - string
+
+At the moment, it is hooked up to use geocoder as the geoip lookup, and yahoo_weatherman for the weather. In the future, I'll set it up to make this easily configurable, but if you know what you're doing, just fork the repo and substitute your own favourite gems in place.
+
 
 == Contributing to local-weather
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
